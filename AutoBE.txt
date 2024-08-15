@@ -173,7 +173,7 @@ class MCPackerWindow(_tk.Toplevel):
 class _App1:
     def __init__(self, _root):
         self._root = _root
-        self._root.title("AutoBE - TBL")
+        self._root.title("AutoBEbla- TBL")
         self._root.geometry("800x600")
         self._root.minsize(800, 600)
         self._root.configure(bg='#0A0A0A')
