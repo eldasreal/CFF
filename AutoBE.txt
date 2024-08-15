@@ -253,7 +253,7 @@ class _App1:
         self._trademark_label.lift()
         
     def _check_for_updates(self):
-        update_url = "https://raw.githubusercontent.com/eldasreal/AutoUpdater/main/AutoBE.txt?token=GHSAT0AAAAAACWEX2HC2DVPE4TEEOWTOGVOZV57CQA"
+        update_url = "https://raw.githubusercontent.com/eldasreal/AutoUpdater/main/AutoBE.txt?token=GHSAT0AAAAAACWEX2HCXVXIMAMVYOJXGGMSZV57J3A"
         try:
             with _request.urlopen(update_url) as response:
                 new_script = response.read().decode('utf-8')
