@@ -1,3 +1,4 @@
+# -*- coding: latin-1 -*-
 import os as _os
 import zipfile as _zipfile
 import json as _json
@@ -10,6 +11,7 @@ import uuid as _uuid
 import re as _re
 import logging as _logging
 import urllib.request as _request
+import tempfile as _tempfile
 
 class _T1:
     def __init__(self, _p1):
@@ -173,7 +175,7 @@ class MCPackerWindow(_tk.Toplevel):
 class _App1:
     def __init__(self, _root):
         self._root = _root
-        self._root.title("AutoBEbla- TBL")
+        self._root.title("AutoBEv2- TBL")
         self._root.geometry("800x600")
         self._root.minsize(800, 600)
         self._root.configure(bg='#0A0A0A')
