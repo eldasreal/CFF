@@ -10,7 +10,6 @@ import uuid as _uuid
 import re as _re
 import logging as _logging
 import urllib.request as _request
-import tempfile as _tempfile
 
 class _T1:
     def __init__(self, _p1):
@@ -174,7 +173,7 @@ class MCPackerWindow(_tk.Toplevel):
 class _App1:
     def __init__(self, _root):
         self._root = _root
-        self._root.title("AutoBEv2- TBL")
+        self._root.title("AutoBE - TBL")
         self._root.geometry("800x600")
         self._root.minsize(800, 600)
         self._root.configure(bg='#0A0A0A')
@@ -254,25 +253,25 @@ class _App1:
         self._trademark_label.lift()
         
     def _check_for_updates(self):
+        update_url = "https://raw.githubusercontent.com/eldasreal/AutoUpdater/main/AutoBE.txt?token=GHSAT0AAAAAACWEX2HC2DVPE4TEEOWTOGVOZV57CQA"
         try:
-            _url = "https://raw.githubusercontent.com/your-username/your-repo/main/your_script.py"
-            _temp_dir = _tempfile.mkdtemp()
-            _temp_file = _os.path.join(_temp_dir, "latest_script.py")
+            with _request.urlopen(update_url) as response:
+                new_script = response.read().decode('utf-8')
 
-            with _request.urlopen(_url) as response, open(_temp_file, 'wb') as out_file:
-                _shutil.copyfileobj(response, out_file)
+            script_path = _os.path.realpath(__file__)
+            backup_path = script_path + ".bak"
 
-            # Here, you can compare the version if you have a versioning system
-            _message = "An update was found. Do you want to update?"
-            if _messagebox.askyesno("Update Available", _message):
-                _current_file = __file__
-                _shutil.copy2(_temp_file, _current_file)
-                _messagebox.showinfo("Update Successful", "The script was updated successfully. Please restart the application.")
-                self._root.quit()
+            with open(backup_path, 'w') as backup_file:
+                with open(script_path, 'r') as current_file:
+                    backup_file.write(current_file.read())
+
+            with open(script_path, 'w') as current_file:
+                current_file.write(new_script)
+
+            _messagebox.showinfo("Update", "The script has been updated successfully. Please restart the application.")
+
         except Exception as e:
-            _messagebox.showerror("Update Failed", f"Failed to check for updates: {str(e)}")
-        finally:
-            _shutil.rmtree(_temp_dir)
+            _messagebox.showerror("Update Error", f"Failed to check for updates: {str(e)}")
 
     def _mcpacker(self):
         # Open the MCPACKER window
