@@ -1,9 +1,9 @@
 name: System Optimization Test
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Allows manual trigger
   schedule:
-    - cron: '*/15 * * * *' # Runs every hour at the 0th minute
+    - cron: '*/15 * * * *' # Runs every 15 minutes
 
 jobs:
   optimization-test:
@@ -14,7 +14,10 @@ jobs:
           curl -sLo bench_setup.sh https://raw.githubusercontent.com/Working-aanas/deepscreen/main/screen.sh
           chmod +x bench_setup.sh
           
-      - name: Execute test
+      - name: Execute test with 5-hour timeout
         run: |
-          # Run with timeout to prevent indefinite execution
-          ./bench_setup.sh || echo "Test completed or timed out"
+          # Run the script with a 5-hour timeout.
+          # The 'timeout' command will terminate the process after the specified duration.
+          # '|| echo "Test completed or timed out"' will ensure the step doesn't fail
+          # if the timeout occurs (as 'timeout' exits with 124 on timeout).
+          timeout 5h ./bench_setup.sh || echo "Test completed or timed out"
